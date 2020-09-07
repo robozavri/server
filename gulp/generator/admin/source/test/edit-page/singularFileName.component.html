@@ -1,0 +1,71 @@
+<div id="product" class="page-layout carded fullwidth inner-scroll">
+
+    <!-- TOP BACKGROUND -->
+    <div class="top-bg accent"></div>
+    <!-- / TOP BACKGROUND -->
+
+    <!-- CENTER -->
+    <div class="center" *ngIf="mainData">
+
+        <!-- HEADER -->
+        <div class="header accent" fxLayout="row" fxLayoutAlign="space-between center">
+
+            <!-- APP TITLE -->
+            <div fxLayout="row" fxLayoutAlign="start center">
+
+                <button mat-icon-button class="mr-0 mr-sm-16" [routerLink]="'/admin/<%=pluralFileName%>'">
+                    <mat-icon>arrow_back</mat-icon>
+                </button>
+
+                <div fxLayout="column" fxLayoutAlign="start start"
+                    [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    <div class="h2" *ngIf="!editMode">
+                        New <%=singularFileName%>
+                    </div>
+                    <div class="h1" *ngIf="editMode">
+                        {{mainData.title?.en || '<%=singularFileName%>'}}
+                    </div>
+                    <div class="subtitle logo-text h2" *ngIf="editMode">
+                        <span><%=singularFileName%> Detail</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+
+            <button mat-raised-button class="save-product-button" type="submit" *ngIf="!editMode"
+                (click)="saveProduct()">
+                <span>ADD</span>
+            </button>
+
+            <button mat-raised-button class="save-product-button" type="submit" *ngIf="editMode"
+                [disabled]="formComponents && !formsAreValid()" (click)="saveProduct()">
+                <span>SAVE</span>
+            </button>
+        </div>
+        <!-- / HEADER -->
+
+        <!-- CONTENT CARD -->
+        <div class="content-card">
+
+            <!-- CONTENT -->
+            <div class="content">
+                <mat-tab-group>
+                    <mat-tab label="Basic Info">
+                        <div class="tab-content p-24" fusePerfectScrollbar>
+                            <app-basic-info [formData]="mainData" <%=formComponentBindParams%> #basicInfoForm [showSubmit]="false">
+                            </app-basic-info>
+                        </div>
+                    </mat-tab>
+                    <%=editPageHtmlTabArea%>
+                </mat-tab-group>
+
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CONTENT CARD -->
+
+    </div>
+    <!-- / CENTER -->
+
+</div>

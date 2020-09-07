@@ -1,0 +1,17 @@
+<div id="articles" class="page-layout carded fullwidth inner-scroll">
+    <div class="top-bg accent"></div>
+    <div class="center">
+        <app-filters [query]="query" (queryChange)="reloadParams($event)"></app-filters>
+
+        <div class="tab_wrapper">
+            <mat-tab-group>
+                <mat-tab label="List">
+                    <app-list [items]="items$" [numTotal]="numTotal$" [query]="query"
+                        (queryChange)="reloadParams($event)" (updateForm)="update($event)" (updateMeta)="update($event)"
+                        (deleteForm)="delete($event)" (updatePositions)="updatePositions($event)">
+                    </app-list>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+    </div>
+</div>

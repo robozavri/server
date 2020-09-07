@@ -1,0 +1,60 @@
+<div class="content-card" *ngIf="dataSource && dataSource.length">
+
+    <mat-table class="products-table articles_table" #table [dataSource]="dataSource" multiTemplateDataRows
+        fusePerfectScrollbar cdkDropList (cdkDropListDropped)="drop($event)">
+
+        <%=listColumnsHtml%>
+
+        <!-- Active Column -->
+        <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef fxHide fxShow.gt-xs>Active</mat-header-cell>
+            <mat-cell *matCellDef="let item" fxHide fxShow.gt-xs>
+
+                <!-- <mat-icon *ngIf="item" class="active-icon green-600 s-16">check</mat-icon>
+				<mat-icon *ngIf="!item" class="active-icon red-500 s-16">close</mat-icon> -->
+
+                <span class="cal-event-actions ng-star-inserted">
+                    <a class="cal-event-action ng-star-inserted">
+                        <i class="material-icons s-16">edit</i>
+                    </a>
+                    <a class="cal-event-action ng-star-inserted" (click)="confirmDelete($event, item)">
+                        <i class="material-icons s-16">delete</i>
+                    </a>
+                </span>
+
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let item" [attr.colspan]="displayedColumns.length">
+                <div fxFlex [@detailExpand]="item == expandedElement ? 'expanded' : 'collapsed'"
+                    style="overflow: hidden;">
+                    <!-- *ngIf="expandedElement && item._id === expandedElement._id " -->
+                    <mat-tab-group>
+                        <mat-tab label="Information">
+                            <app-form [formData]="item" <%=listComponentBindParams%> (submitForm)="submitFormData($event, item._id)"></app-form>
+                        </mat-tab>
+                        <%=listComponentMetaHtml%> 
+                        
+                    </mat-tab-group>
+                </div>
+            </td>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky:true"></mat-header-row>
+
+        <mat-row *matRowDef="let product; columns: displayedColumns;" class="product" matRipple
+            [class.example-expanded-row]="expandedElement === product"
+            (click)="expandedElement = expandedElement === product ? null : product" cdkDrag>
+        </mat-row>
+
+        <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="details-row">
+        </mat-row>
+
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="query.limit" [length]="pageLength"
+        (page)="pageEvent = pagenatorEvent($event)">
+    </mat-paginator>
+
+</div>

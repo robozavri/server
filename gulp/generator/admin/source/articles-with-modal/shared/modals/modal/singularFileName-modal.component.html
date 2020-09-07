@@ -1,0 +1,21 @@
+<div class="default_modal_wrapper">
+    <h2> Add <%=pluralFileName%> </h2>
+    <div mat-dialog-content>
+        <mat-tab-group style="width: 100%; margin-bottom: 20px">
+            <mat-tab label="information">
+                <div class="page_body">
+                    <app-form [formData]="data" <%=listComponentBindParams%> #<%=nameSingularLC%>Form [showSubmit]="showSubmit"></app-form>
+                </div>
+            </mat-tab>
+            <%=MetaModalHtml%>
+        </mat-tab-group>
+    </div>
+    <mat-dialog-actions>
+        <button mat-raised-button mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-raised-button (click)="onFinish()">
+            Submit
+        </button>
+    </mat-dialog-actions>
+</div>
